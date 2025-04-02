@@ -709,7 +709,7 @@ void Player::ApplyCustomGroundedFriction(physx::PxRigidDynamic* aPhysicsBodyPtr,
 		const physx::PxVec3 additionalSlideForce = projectedGravity * aPhysicsBodyPtr->getMass();
 		aPhysicsBodyPtr->addForce(additionalSlideForce, physx::PxForceMode::eFORCE);
 
-		float frictionFactor = myStats.groundSlidingFriction * (std::abs(myStats.groundedDotProduct) * 0.1f);
+		float frictionFactor = myStats.groundSlidingFriction * (UtilityFunctions::Abs(myStats.groundedDotProduct) * 0.1f);
 		horizontalVelocity *= pow(frictionFactor, aDeltaTime);
 		aPhysicsBodyPtr->setLinearVelocity(physx::PxVec3(horizontalVelocity.x, currentVelocity.y, horizontalVelocity.z));
 	}
@@ -719,7 +719,7 @@ void Player::ApplyCustomGroundedFriction(physx::PxRigidDynamic* aPhysicsBodyPtr,
 		const physx::PxVec3 antiSlideForce = projectedGravity * aPhysicsBodyPtr->getMass() * -1.0f;
 		aPhysicsBodyPtr->addForce(antiSlideForce, physx::PxForceMode::eFORCE);
 
-		float frictionFactor = myStats.groundedFriction * (std::abs(myStats.groundedDotProduct) * 0.1f);
+		float frictionFactor = myStats.groundedFriction * (UtilityFunctions::Abs(myStats.groundedDotProduct) * 0.1f);
 		horizontalVelocity *= pow(frictionFactor, aDeltaTime);
 		if (horizontalVelocity.magnitudeSquared() < myStats.groundedFullStopDistance * myStats.groundedFullStopDistance)
 		{
@@ -829,7 +829,7 @@ void Player::UpdateCameraRotation(float aDeltaTime)
 	DreamEngine::Rotator currentRotation = myCamera->GetTransform().GetRotation();
 	currentRotation.x += myStats.rotationDelta.y * myStats.rotationSpeed * aDeltaTime;
 	currentRotation.y += myStats.rotationDelta.x * myStats.rotationSpeed * aDeltaTime;
-	currentRotation.x = std::clamp(currentRotation.x, myStats.minPitch, myStats.maxPitch);
+	currentRotation.x = UtilityFunctions::Clamp(currentRotation.x, myStats.minPitch, myStats.maxPitch);
 	myCamera->SetRotation(currentRotation);
 	myTransform.SetRotation(DE::Vector3f(myTransform.GetRotation().x, currentRotation.y, myTransform.GetRotation().z));
 }
