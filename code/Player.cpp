@@ -644,14 +644,6 @@ void Player::ApplyGrapplingHookForces(physx::PxRigidDynamic* aPhysicsBodyPtr)
 	const float pullStrength = UtilityFunctions::Lerp(0.0f, myStats.maxAirVelocity, elapsedTimeScalar);
 
 
-	// Slight upward force to simulate being lifted off the ground
-	//if (myStats.grappleDuration.GetCurrentValue() > 0.25f)
-	//{
-	//	physx::PxVec3 antiGravity(0.0f, 9.81f * 168.0f, 0.0f);
-	//	aPhysicsBodyPtr->addForce(antiGravity, physx::PxForceMode::eACCELERATION);
-	//}
-
-
 	// Spring dampening effect
 	const physx::PxVec3 pullForce = myStats.grapplingSpringStiffness * pullDirection * pullStrength;
 	const physx::PxVec3 springDampeningForce = myStats.grapplingSpringDampeningFactor * currentVelocity;
