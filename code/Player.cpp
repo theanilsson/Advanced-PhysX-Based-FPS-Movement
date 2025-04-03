@@ -636,9 +636,10 @@ void Player::UpdateGrapplingHookVisualization()
 
 void Player::ApplyGrapplingHookForces(physx::PxRigidDynamic* aPhysicsBodyPtr)
 {
-	const physx::PxVec3 currentVelocity = aPhysicsBodyPtr->getLinearVelocity();
 	if (myStats.grappledObject != nullptr) myStats.grapplingPoint = myStats.grappledObject->getGlobalPose().p;
+	
 	const physx::PxVec3 grapplingVector = myStats.grapplingPoint - aPhysicsBodyPtr->getGlobalPose().p;
+	const physx::PxVec3 currentVelocity = aPhysicsBodyPtr->getLinearVelocity();
 	const physx::PxVec3 pullDirection = grapplingVector.getNormalized() * 0.75f + currentVelocity.getNormalized() * 0.25f;
 	const float elapsedTimeScalar = UtilityFunctions::Clamp(myStats.grapplingDuration.GetCurrentValue() / myStats.grapplingDuration.GetThresholdValue(), 0.0f, 1.0f);
 	const float pullStrength = UtilityFunctions::Lerp(0.0f, myStats.maxAirVelocity, elapsedTimeScalar);
